@@ -27,24 +27,22 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.detailViewController = (GTHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
+    self.clearsSelectionOnViewWillAppear = false;
+    
+    // Show loading… as activity
+    self.title = @"Loading…";
     //Creating NSURL object to send HTTP request to get all repository for given org.
     NSURL *URL = [NSURL URLWithString:@"https://api.github.com/orgs/intuit/repos"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    //NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:0.0];
     NSURLSession *session = [NSURLSession sharedSession];
     
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
                                             completionHandler:
                                   ^(NSData *data, NSURLResponse *response, NSError *error) {
                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                          UIActivityIndicatorView *activityIndicator;
-                                          activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                                      
-                                          //Reloading data in table view after fecthing all the repository info.
-                                         activityIndicator.hidden = NO;
-                                          [activityIndicator sizeToFit];
-                                          [activityIndicator startAnimating];
-                                          [self.view bringSubviewToFront:activityIndicator];
-//                                      });
+                                          self.title = @"Intuit";
+                                          
                                           NSLog(@"Status code: %ld", [(NSHTTPURLResponse *)response statusCode]);
                                       if (error != nil || [(NSHTTPURLResponse *)response statusCode] != 200) {
                                           NSLog(@"Error: %@",error);
@@ -74,11 +72,10 @@
                                               [self.repos addObject:repoInfo];
                                           }
                                           NSLog(@"%@", self.repos);
-                                          [activityIndicator stopAnimating];
-//                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                          dispatch_async(dispatch_get_main_queue(), ^{
                                               //Reloading data in table view after fecthing all the repository info.
                                               [self.tableView reloadData];
-//                                          });
+                                         });
                                       }
                                           });
                                   }];
@@ -145,6 +142,10 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return NO;
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.detailViewController.repoInfo = nil;
 }
 
 - (NSDictionary *)JSONFromFile

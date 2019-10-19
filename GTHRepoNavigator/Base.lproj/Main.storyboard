@@ -166,7 +166,7 @@
                             <outlet property="delegate" destination="qsQ-VP-01d" id="qTY-GD-glo"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Intuit" id="78f-Et-uOB"/>
+                    <navigationItem key="navigationItem" id="78f-Et-uOB"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFn-zF-xRN" sceneMemberID="firstResponder"/>
             </objects>
@@ -237,8 +237,7 @@
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="751" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="X9r-9X-ZK3">
                                                                             <rect key="frame" x="0.0" y="27" width="219" height="20.5"/>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Oxe-3X-n3o">

@@ -27,9 +27,7 @@
 
 - (void)configureView {
     // Update the user interface for the detail item.
-    if (self.repoInfo) {
-        self.title = self.repoInfo.name;
-    }
+    
     //TODO: - This need to go somewhere else.
     //Creating NSURL object to send HTTP request to get all the issues for selected repository.
     NSString *url = [NSString stringWithFormat:@"https://api.github.com/repos/%@/issues?state=all",self.repoInfo.name];
@@ -41,7 +39,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-   // [self configureView];
 }
 
 
@@ -69,9 +66,14 @@
     //NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:2.0];
     NSURLSession *session = [NSURLSession sharedSession];
     
+    self.title = @"Loading…";
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
                                             completionHandler:
                                   ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          self.title = self.repoInfo.name;
+                                      });
+                                      
                                       if (error != nil || [(NSHTTPURLResponse *)response statusCode] != 200) {
                                           NSLog(@"Error: %@",error);
                                           UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error while fetchign issues" message:error.description preferredStyle:UIAlertControllerStyleAlert];
