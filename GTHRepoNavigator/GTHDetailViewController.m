@@ -71,9 +71,11 @@
                                             completionHandler:
                                   ^(NSData *data, NSURLResponse *response, NSError *error) {
                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                          // Setting title after getting response data.
                                           self.title = self.repoInfo.name;
                                       });
                                       
+                                      // Check for error message..
                                       if (error != nil || [(NSHTTPURLResponse *)response statusCode] != 200) {
                                           NSLog(@"Error: %@",error);
                                           UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error while fetchign issues" message:error.description preferredStyle:UIAlertControllerStyleAlert];
@@ -81,6 +83,7 @@
                                               return;
                                           }];
                                           [alert addAction:ok];
+                                          //Adding Alert View controller after getting error.
                                           [self presentViewController:alert animated:true completion:^{
                                               return;
                                           }];
@@ -109,8 +112,8 @@
                                                   [self.closedIssues addObject:issueInfo];
                                               }
                                           }
-                                          NSLog(@"%@", self.openIssues);
-                                          NSLog(@"%@", self.closedIssues);
+                                          //NSLog(@"%@", self.openIssues);
+                                          //NSLog(@"%@", self.closedIssues);
                                           
                                           dispatch_async(dispatch_get_main_queue(), ^{
                                               [self.tableView reloadData];
@@ -187,6 +190,7 @@
     return NO;
 }
 
+// TODO: Go somewhere else... common for both view controller
 - (UIColor *)colorWithHexString:(NSString *)colorString
 {
     colorString = [colorString stringByReplacingOccurrencesOfString:@"#" withString:@""];

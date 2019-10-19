@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+//#import "GTHFoundation.h"
+
 @class GTHDetailViewController;
 
 @interface GTHMasterViewController : UITableViewController

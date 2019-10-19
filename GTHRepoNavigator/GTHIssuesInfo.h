@@ -16,7 +16,7 @@
 @property (strong, nonatomic) NSString *issueDescription;
 @property (strong, nonatomic) NSArray *labels;
 
-
+/*Creating Issue data model from dictionary*/
 + (GTHIssuesInfo *)creatFromDictionary: (NSDictionary *)dict;
 
 @end

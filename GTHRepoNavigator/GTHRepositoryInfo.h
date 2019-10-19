@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSNumber *numberOfStars;
 @property (strong, nonatomic) NSString *languageName;
 
+/*Creating Repository data model from dictionary*/
 + (GTHRepositoryInfo *)creatFromDictionary: (NSDictionary *)dict;
 
 @end

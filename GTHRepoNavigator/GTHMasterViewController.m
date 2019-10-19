@@ -33,7 +33,6 @@
     self.title = @"Loading…";
     //Creating NSURL object to send HTTP request to get all repository for given org.
     NSURL *URL = [NSURL URLWithString:@"https://api.github.com/orgs/intuit/repos"];
-    //NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:0.0];
     NSURLSession *session = [NSURLSession sharedSession];
     
@@ -41,9 +40,11 @@
                                             completionHandler:
                                   ^(NSData *data, NSURLResponse *response, NSError *error) {
                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                          // Setting title after getting response data.
                                           self.title = @"Intuit";
                                           
                                           NSLog(@"Status code: %ld", [(NSHTTPURLResponse *)response statusCode]);
+                                       // Check for error message..
                                       if (error != nil || [(NSHTTPURLResponse *)response statusCode] != 200) {
                                           NSLog(@"Error: %@",error);
                                           
@@ -53,12 +54,13 @@
                                               return;
                                           }];
                                           [alert addAction:ok];
+                                          //Adding Alert View controller after getting error.
                                           [self presentViewController:alert animated:true completion:^{
                                               return;
                                           }];
                                         } else {
                                           // ...
-                                          //Arrays initialization..
+                                          //Repository array initialization..
                                           self.repos = [[NSMutableArray alloc] init];
                                           
                                           //Json parsing using NSJSONSerialization to convert in to fondation objects.
@@ -131,9 +133,7 @@
     cell.languageImageView.image = circleImage;
     NSDictionary *colorDict = [self JSONFromFile];
     NSString *color = [ colorDict objectForKey:info.languageName];
-    //[cell.languageImageView s
     cell.languageImageView.tintColor = [self colorWithHexString:color];
-    //cell.languageImageView.backgroundColor = [self colorWithHexString:color];
     cell.language.text = info.languageName;
     
     return cell;
@@ -144,9 +144,9 @@
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.detailViewController.repoInfo = nil;
-}
+//- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    self.detailViewController.repoInfo = nil;
+//}
 
 - (NSDictionary *)JSONFromFile
 {
