@@ -24,7 +24,15 @@
 -(void)prepareForReuse
 {
     [super prepareForReuse];
-    //[self.labelStack removeArrangedSubview:labe
+    
+    self.issueTitle.text = nil;
+    self.issueNumber.text = nil;
+    self.issueDescription.text = nil;
+    self.issueStateImageView.image = nil;
+    
+    for(UIView *view in self.labelStack.arrangedSubviews) {
+        [view removeFromSuperview];
+    }
 } 
 
 @end

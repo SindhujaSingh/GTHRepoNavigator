@@ -140,9 +140,6 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    UIImage *statusImage;
-    
     GTHIssueCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     if (self.segmentedControl.selectedSegmentIndex == 0) {
@@ -150,9 +147,11 @@
     } else {
         self.issues = self.closedIssues;
     }
+    
     GTHIssuesInfo *info = self.issues[indexPath.row];
-    NSArray *array = [NSArray arrayWithArray:info.labels];
-    //NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:<#(nonnull NSDictionary *)#>];
+    NSArray *labels = [NSArray arrayWithArray:info.labels];
+    UIImage *statusImage;
+    
     if([[info issueState] isEqualToString:@"open"]) {
         statusImage = [[UIImage imageNamed:@"starFilled"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     } else {
@@ -161,24 +160,22 @@
     
     //Setting values for table cell from IssueInfoInfo object.
     cell.issueStateImageView.image = statusImage;
-    //cell.starImageView.tintColor = [UIColor purpleColor];
     cell.issueNumber.text = [NSString stringWithFormat:@"#%@",[info.issueNumber stringValue]];
     cell.issueDescription.text = info.issueDescription;
     cell.issueTitle.text = info.issueTitle;
-    if ([array count] !=0) {
-        for (NSDictionary *dict in array) {
+        
+    if ([labels count] != 0) {
+        for (NSDictionary *label in labels) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-            [button setTitle:[dict valueForKey:@"name"] forState:UIControlStateNormal];
-            [button setBackgroundColor:[self colorWithHexString:[dict valueForKey:@"color"]]];
-            //button.layer.cornerRadius =[button.layer frame].size.height * 0.20;
-//            if (cell.labelStack.arrangedSubviews) {
-//                for (UIView *view in cell.labelStack.arrangedSubviews) {
-//                    [cell.labelStack removeArrangedSubview:view];
-//                }
-//            }
+            button.userInteractionEnabled = false;
+            button.layer.cornerRadius = 10;
+            button.clipsToBounds = true;
+            [button setTitle:[label valueForKey:@"name"] forState:UIControlStateNormal];
+            [button setBackgroundColor:[self colorWithHexString:[label valueForKey:@"color"]]];
             [cell.labelStack addArrangedSubview:button];
         }
     }
+    
     return cell;
 }
 
