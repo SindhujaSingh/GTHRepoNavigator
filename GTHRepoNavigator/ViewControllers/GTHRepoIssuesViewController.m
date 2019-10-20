@@ -6,11 +6,11 @@
 //  Copyright © 2019 SindhujaSingh. All rights reserved.
 //
 
-#import "GTHDetailViewController.h"
+#import "GTHRepoIssuesViewController.h"
 #import "GTHIssueCell.h"
 #import "GTHIssuesInfo.h"
 
-@interface GTHDetailViewController ()
+@interface GTHRepoIssuesViewController ()
 
 @property (strong, nonatomic) NSMutableArray *openIssues;
 @property (strong, nonatomic) NSMutableArray *closedIssues;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation GTHDetailViewController
+@implementation GTHRepoIssuesViewController
 
 - (void)configureView {
     // Update the user interface for the detail item.

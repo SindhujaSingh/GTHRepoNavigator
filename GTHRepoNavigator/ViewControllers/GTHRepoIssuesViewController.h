@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GTHRepositoryInfo.h"
 
-@interface GTHDetailViewController : UIViewController
+@interface GTHRepoIssuesViewController : UIViewController
 
 ///Object to hold data to display for a repository.
 @property (strong, nonatomic) GTHRepositoryInfo *repoInfo;

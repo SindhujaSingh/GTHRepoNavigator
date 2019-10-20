@@ -8,14 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-//#import "GTHFoundation.h"
+@class GTHRepoIssuesViewController;
 
-@class GTHDetailViewController;
-
-@interface GTHMasterViewController : UITableViewController
+@interface GTHReposInfoViewController : UITableViewController
 
 ///Secondary view controller of split view
-@property (strong, nonatomic) GTHDetailViewController *detailViewController;
+@property (strong, nonatomic) GTHRepoIssuesViewController *detailViewController;
 
 @end
 

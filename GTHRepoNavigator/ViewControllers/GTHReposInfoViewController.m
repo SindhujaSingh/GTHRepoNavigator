@@ -6,26 +6,26 @@
 //  Copyright © 2019 SindhujaSingh. All rights reserved.
 //
 
-#import "GTHMasterViewController.h"
-#import "GTHDetailViewController.h"
+#import "GTHReposInfoViewController.h"
+#import "GTHRepoIssuesViewController.h"
 #import "GTHRepositoryInfoCell.h"
 #import "GTHRepositoryInfo.h"
 
-@interface GTHMasterViewController ()
+@interface GTHReposInfoViewController ()
 
 /*List of repositories*/
 @property (strong, nonatomic) NSMutableArray *repos;
 
 @end
 
-@implementation GTHMasterViewController
+@implementation GTHReposInfoViewController
 
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.detailViewController = (GTHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.detailViewController = (GTHRepoIssuesViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     self.clearsSelectionOnViewWillAppear = false;
     
@@ -101,7 +101,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         GTHRepositoryInfo *info = self.repos[indexPath.row];
         //Creating secondary view in split view controller to show selected repository info.
-        GTHDetailViewController *controller = (GTHDetailViewController *)[[segue destinationViewController] topViewController];
+        GTHRepoIssuesViewController *controller = (GTHRepoIssuesViewController *)[[segue destinationViewController] topViewController];
         [controller setRepoInfo:info];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;

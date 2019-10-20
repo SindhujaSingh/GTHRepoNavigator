@@ -7,7 +7,7 @@
 //
 
 #import "GTHAppDelegate.h"
-#import "GTHDetailViewController.h"
+#import "GTHRepoIssuesViewController.h"
 
 /**
  Annonymous Category which conforms "UISplitViewControllerDelegate" protocol that allow you to manage changes to a split view interface.
@@ -53,7 +53,7 @@
 #pragma mark - Split view
 
 - (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
-    if ([secondaryViewController isKindOfClass:[UINavigationController class]] && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[GTHDetailViewController class]] && ([(GTHDetailViewController *)[(UINavigationController *)secondaryViewController topViewController] repoInfo] == nil)) {
+    if ([secondaryViewController isKindOfClass:[UINavigationController class]] && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[GTHRepoIssuesViewController class]] && ([(GTHRepoIssuesViewController *)[(UINavigationController *)secondaryViewController topViewController] repoInfo] == nil)) {
         // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
         return YES;
     } else {

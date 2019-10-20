@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E8826090235649D2003DDD3F /* GTHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E882608F235649D2003DDD3F /* GTHAppDelegate.m */; };
-		E8826093235649D2003DDD3F /* GTHMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8826092235649D2003DDD3F /* GTHMasterViewController.m */; };
-		E8826096235649D2003DDD3F /* GTHDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8826095235649D2003DDD3F /* GTHDetailViewController.m */; };
+		E8826093235649D2003DDD3F /* GTHReposInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8826092235649D2003DDD3F /* GTHReposInfoViewController.m */; };
+		E8826096235649D2003DDD3F /* GTHRepoIssuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8826095235649D2003DDD3F /* GTHRepoIssuesViewController.m */; };
 		E8826099235649D2003DDD3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8826097235649D2003DDD3F /* Main.storyboard */; };
 		E882609B235649D5003DDD3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E882609A235649D5003DDD3F /* Assets.xcassets */; };
 		E882609E235649D5003DDD3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E882609C235649D5003DDD3F /* LaunchScreen.storyboard */; };
@@ -45,9 +45,9 @@
 /* Begin PBXFileReference section */
 		E882608B235649D2003DDD3F /* GTHRepoNavigator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTHRepoNavigator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E882608F235649D2003DDD3F /* GTHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHAppDelegate.m; sourceTree = "<group>"; };
-		E8826092235649D2003DDD3F /* GTHMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHMasterViewController.m; sourceTree = "<group>"; };
-		E8826094235649D2003DDD3F /* GTHDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTHDetailViewController.h; sourceTree = "<group>"; };
-		E8826095235649D2003DDD3F /* GTHDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHDetailViewController.m; sourceTree = "<group>"; };
+		E8826092235649D2003DDD3F /* GTHReposInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHReposInfoViewController.m; sourceTree = "<group>"; };
+		E8826094235649D2003DDD3F /* GTHRepoIssuesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTHRepoIssuesViewController.h; sourceTree = "<group>"; };
+		E8826095235649D2003DDD3F /* GTHRepoIssuesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHRepoIssuesViewController.m; sourceTree = "<group>"; };
 		E8826098235649D2003DDD3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E882609A235649D5003DDD3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E882609D235649D5003DDD3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 		E88260D023564E9C003DDD3F /* GTHIssueCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHIssueCell.m; sourceTree = "<group>"; };
 		E88260D223564ED7003DDD3F /* GTHIssuesInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTHIssuesInfo.h; sourceTree = "<group>"; };
 		E88260D323564ED7003DDD3F /* GTHIssuesInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHIssuesInfo.m; sourceTree = "<group>"; };
-		E88260D523577EAB003DDD3F /* GTHMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTHMasterViewController.h; sourceTree = "<group>"; };
+		E88260D523577EAB003DDD3F /* GTHReposInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTHReposInfoViewController.h; sourceTree = "<group>"; };
 		E88260D623577F3D003DDD3F /* GTHAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTHAppDelegate.h; sourceTree = "<group>"; };
 		E8CA547B235B73AC000D48F3 /* GTHRepositoryInfo_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHRepositoryInfo_Tests.m; sourceTree = "<group>"; };
 		E8CA547D235B770A000D48F3 /* RepoInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RepoInfo.json; sourceTree = "<group>"; };
@@ -182,10 +182,10 @@
 		E8CA5481235D0B71000D48F3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E88260D523577EAB003DDD3F /* GTHMasterViewController.h */,
-				E8826092235649D2003DDD3F /* GTHMasterViewController.m */,
-				E8826094235649D2003DDD3F /* GTHDetailViewController.h */,
-				E8826095235649D2003DDD3F /* GTHDetailViewController.m */,
+				E88260D523577EAB003DDD3F /* GTHReposInfoViewController.h */,
+				E8826092235649D2003DDD3F /* GTHReposInfoViewController.m */,
+				E8826094235649D2003DDD3F /* GTHRepoIssuesViewController.h */,
+				E8826095235649D2003DDD3F /* GTHRepoIssuesViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -331,11 +331,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E88260CB23564DB0003DDD3F /* GTHRepositoryInfoCell.m in Sources */,
-				E8826093235649D2003DDD3F /* GTHMasterViewController.m in Sources */,
+				E8826093235649D2003DDD3F /* GTHReposInfoViewController.m in Sources */,
 				E8826090235649D2003DDD3F /* GTHAppDelegate.m in Sources */,
 				E88260A1235649D5003DDD3F /* main.m in Sources */,
 				E88260D123564E9C003DDD3F /* GTHIssueCell.m in Sources */,
-				E8826096235649D2003DDD3F /* GTHDetailViewController.m in Sources */,
+				E8826096235649D2003DDD3F /* GTHRepoIssuesViewController.m in Sources */,
 				E88260CE23564E2A003DDD3F /* GTHRepositoryInfo.m in Sources */,
 				E88260D423564ED7003DDD3F /* GTHIssuesInfo.m in Sources */,
 			);
