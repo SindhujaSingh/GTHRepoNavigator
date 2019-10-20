@@ -20,9 +20,9 @@
 		E88260CE23564E2A003DDD3F /* GTHRepositoryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E88260CD23564E2A003DDD3F /* GTHRepositoryInfo.m */; };
 		E88260D123564E9C003DDD3F /* GTHIssueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E88260D023564E9C003DDD3F /* GTHIssueCell.m */; };
 		E88260D423564ED7003DDD3F /* GTHIssuesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E88260D323564ED7003DDD3F /* GTHIssuesInfo.m */; };
-		E8C7CBA723578F6800A9EEAF /* color.json in Resources */ = {isa = PBXBuildFile; fileRef = E8C7CBA623578F6800A9EEAF /* color.json */; };
 		E8CA547C235B73AC000D48F3 /* GTHRepositoryInfo_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CA547B235B73AC000D48F3 /* GTHRepositoryInfo_Tests.m */; };
 		E8CA547E235B770A000D48F3 /* RepoInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = E8CA547D235B770A000D48F3 /* RepoInfo.json */; };
+		E8CA5486235D0BEF000D48F3 /* color.json in Resources */ = {isa = PBXBuildFile; fileRef = E8CA5485235D0BEF000D48F3 /* color.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,9 +69,9 @@
 		E88260D323564ED7003DDD3F /* GTHIssuesInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHIssuesInfo.m; sourceTree = "<group>"; };
 		E88260D523577EAB003DDD3F /* GTHMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTHMasterViewController.h; sourceTree = "<group>"; };
 		E88260D623577F3D003DDD3F /* GTHAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTHAppDelegate.h; sourceTree = "<group>"; };
-		E8C7CBA623578F6800A9EEAF /* color.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = color.json; path = ../../color.json; sourceTree = "<group>"; };
 		E8CA547B235B73AC000D48F3 /* GTHRepositoryInfo_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHRepositoryInfo_Tests.m; sourceTree = "<group>"; };
 		E8CA547D235B770A000D48F3 /* RepoInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RepoInfo.json; sourceTree = "<group>"; };
+		E8CA5485235D0BEF000D48F3 /* color.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = color.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,23 +124,13 @@
 			children = (
 				E88260D623577F3D003DDD3F /* GTHAppDelegate.h */,
 				E882608F235649D2003DDD3F /* GTHAppDelegate.m */,
-				E88260D523577EAB003DDD3F /* GTHMasterViewController.h */,
-				E8826092235649D2003DDD3F /* GTHMasterViewController.m */,
-				E8826094235649D2003DDD3F /* GTHDetailViewController.h */,
-				E8826095235649D2003DDD3F /* GTHDetailViewController.m */,
-				E8826097235649D2003DDD3F /* Main.storyboard */,
-				E88260C923564DB0003DDD3F /* GTHRepositoryInfoCell.h */,
-				E88260CA23564DB0003DDD3F /* GTHRepositoryInfoCell.m */,
-				E88260CC23564E2A003DDD3F /* GTHRepositoryInfo.h */,
-				E88260CD23564E2A003DDD3F /* GTHRepositoryInfo.m */,
-				E88260CF23564E9C003DDD3F /* GTHIssueCell.h */,
-				E88260D023564E9C003DDD3F /* GTHIssueCell.m */,
-				E88260D223564ED7003DDD3F /* GTHIssuesInfo.h */,
-				E88260D323564ED7003DDD3F /* GTHIssuesInfo.m */,
+				E8CA5481235D0B71000D48F3 /* ViewControllers */,
+				E8CA5480235D0B49000D48F3 /* UI */,
+				E8CA547F235D0B3B000D48F3 /* Models */,
 				E882609A235649D5003DDD3F /* Assets.xcassets */,
 				E882609C235649D5003DDD3F /* LaunchScreen.storyboard */,
 				E882609F235649D5003DDD3F /* Info.plist */,
-				E8C7CBA623578F6800A9EEAF /* color.json */,
+				E8CA5482235D0BA3000D48F3 /* Resources */,
 				E88260A0235649D5003DDD3F /* main.m */,
 			);
 			path = GTHRepoNavigator;
@@ -164,6 +154,48 @@
 				E88260B7235649D5003DDD3F /* Info.plist */,
 			);
 			path = GTHRepoNavigatorUITests;
+			sourceTree = "<group>";
+		};
+		E8CA547F235D0B3B000D48F3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E88260CC23564E2A003DDD3F /* GTHRepositoryInfo.h */,
+				E88260CD23564E2A003DDD3F /* GTHRepositoryInfo.m */,
+				E88260D223564ED7003DDD3F /* GTHIssuesInfo.h */,
+				E88260D323564ED7003DDD3F /* GTHIssuesInfo.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E8CA5480235D0B49000D48F3 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				E8826097235649D2003DDD3F /* Main.storyboard */,
+				E88260C923564DB0003DDD3F /* GTHRepositoryInfoCell.h */,
+				E88260CA23564DB0003DDD3F /* GTHRepositoryInfoCell.m */,
+				E88260CF23564E9C003DDD3F /* GTHIssueCell.h */,
+				E88260D023564E9C003DDD3F /* GTHIssueCell.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		E8CA5481235D0B71000D48F3 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E88260D523577EAB003DDD3F /* GTHMasterViewController.h */,
+				E8826092235649D2003DDD3F /* GTHMasterViewController.m */,
+				E8826094235649D2003DDD3F /* GTHDetailViewController.h */,
+				E8826095235649D2003DDD3F /* GTHDetailViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E8CA5482235D0BA3000D48F3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E8CA5485235D0BEF000D48F3 /* color.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,7 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E882609E235649D5003DDD3F /* LaunchScreen.storyboard in Resources */,
-				E8C7CBA723578F6800A9EEAF /* color.json in Resources */,
+				E8CA5486235D0BEF000D48F3 /* color.json in Resources */,
 				E882609B235649D5003DDD3F /* Assets.xcassets in Resources */,
 				E8826099235649D2003DDD3F /* Main.storyboard in Resources */,
 			);

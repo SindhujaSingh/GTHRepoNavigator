@@ -32,43 +32,48 @@
     self.reposInfo = nil;
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
-
-- (void)testAllKeysInRepoInfo {
-    
-    for (NSDictionary *info in self.reposInfo) {
-       // NSLog(@"%@", info.allKeys);
-        XCTAssertNotNil(info.allKeys, @"Keys should not be nil");
-    }
-}
-
-- (void)testRepoInfoObject {
+- (void)testRepoInfoObjectCreation {
     for (NSDictionary *info in self.reposInfo) {
         GTHRepositoryInfo *repositoryInfo = [GTHRepositoryInfo creatFromDictionary:info];
         XCTAssertNotNil(repositoryInfo, @"GTHRepositoryInfo object should not be nil");
     }
 }
-- (void)testPerformanceExample {
+
+- (void)testRepoInfoObjectNameIsNotNil {
+    for (NSDictionary *info in self.reposInfo) {
+        GTHRepositoryInfo *repositoryInfo = [GTHRepositoryInfo creatFromDictionary:info];
+        XCTAssertNotNil(repositoryInfo.name, @"GTHRepositoryInfo object name should not be nil");
+    }
+}
+
+
+- (void)testRepoInfoObjectsCreationPerformance {
     // This is an example of a performance test case.
     [self measureBlock:^{
-        NSLog(@"test");
         for (NSDictionary *info in self.reposInfo) {
             // Put the code you want to measure the time of here.
-            GTHRepositoryInfo *object = [GTHRepositoryInfo creatFromDictionary:info];
+            [GTHRepositoryInfo creatFromDictionary:info];
         }
     }];
 }
 
-- (void)testAsynchronousURLConnection {
+/**
+ Testing webservice call for fetching repos from the server; with default HTTP request timeout (i.e. 60s).
+ Performs following validation:
+    a. data is not nil
+    b. error is not nil
+    c. 200 http response from server
+    d. match response URL with the request URL
+    e. check response MIME type to match a valid json response
+ */
+- (void)testWebServiceGETRepos {
     NSURL *URL = [NSURL URLWithString:@"https://api.github.com/orgs/intuit/repos"];
-    NSString *description = [NSString stringWithFormat:@"GET %@", URL];
-    XCTestExpectation *expectation = [self expectationWithDescription:description];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60.0];
+
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Fetching repos…"];
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithURL:URL
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
                                         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                   {
                                       XCTAssertNotNil(data, "data should not be nil");
@@ -88,7 +93,7 @@
     
     [task resume];
     
-    [self waitForExpectationsWithTimeout:task.originalRequest.timeoutInterval handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:1 handler:^(NSError *error) {
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
         }
