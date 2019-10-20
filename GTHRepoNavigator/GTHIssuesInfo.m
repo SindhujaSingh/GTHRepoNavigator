@@ -33,19 +33,18 @@
 
             NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
 
-            NSUInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+            NSUInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour;
 
             NSDateComponents *components = [gregorian components:unitFlags fromDate:startDate  toDate:endDate options:0];
-            //NSInteger year = [components year];
-            //NSInteger months = [components month];
-            //NSInteger days = [components day];
             NSString *description;
             if ([components year] > 0 ) {
                description = [NSString stringWithFormat:@"Opened by %@, %ld years ago.",user,(long)[components year]];
             } else if ([components month] > 0) {
                 description = [NSString stringWithFormat:@"Opened by %@, %ld months ago.",user,(long)[components month]];
-            } else {
+            } else if ([components day] > 0) {
                 description = [NSString stringWithFormat:@"Opened by %@, %ld days ago.",user,(long)[components day]];
+            } else {
+                description = [NSString stringWithFormat:@"Opened by %@, %ld hrs ago.",user,(long)[components hour]];
             }
            // NSString *description = [NSString stringWithFormat:@"Opened by %@, %ld years %ld months %ld days ago.",user,(long)year,(long)months,(long)days];
             

@@ -21,6 +21,8 @@
 		E88260D123564E9C003DDD3F /* GTHIssueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E88260D023564E9C003DDD3F /* GTHIssueCell.m */; };
 		E88260D423564ED7003DDD3F /* GTHIssuesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E88260D323564ED7003DDD3F /* GTHIssuesInfo.m */; };
 		E8C7CBA723578F6800A9EEAF /* color.json in Resources */ = {isa = PBXBuildFile; fileRef = E8C7CBA623578F6800A9EEAF /* color.json */; };
+		E8CA547C235B73AC000D48F3 /* GTHRepositoryInfo_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CA547B235B73AC000D48F3 /* GTHRepositoryInfo_Tests.m */; };
+		E8CA547E235B770A000D48F3 /* RepoInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = E8CA547D235B770A000D48F3 /* RepoInfo.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,8 @@
 		E88260D523577EAB003DDD3F /* GTHMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTHMasterViewController.h; sourceTree = "<group>"; };
 		E88260D623577F3D003DDD3F /* GTHAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTHAppDelegate.h; sourceTree = "<group>"; };
 		E8C7CBA623578F6800A9EEAF /* color.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = color.json; path = ../../color.json; sourceTree = "<group>"; };
+		E8CA547B235B73AC000D48F3 /* GTHRepositoryInfo_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHRepositoryInfo_Tests.m; sourceTree = "<group>"; };
+		E8CA547D235B770A000D48F3 /* RepoInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RepoInfo.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,8 +149,10 @@
 		E88260A9235649D5003DDD3F /* GTHRepoNavigatorTests */ = {
 			isa = PBXGroup;
 			children = (
+				E8CA547D235B770A000D48F3 /* RepoInfo.json */,
 				E88260AA235649D5003DDD3F /* GTHRepoNavigatorTests.m */,
 				E88260AC235649D5003DDD3F /* Info.plist */,
+				E8CA547B235B73AC000D48F3 /* GTHRepositoryInfo_Tests.m */,
 			);
 			path = GTHRepoNavigatorTests;
 			sourceTree = "<group>";
@@ -274,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8CA547E235B770A000D48F3 /* RepoInfo.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E88260AB235649D5003DDD3F /* GTHRepoNavigatorTests.m in Sources */,
+				E8CA547C235B73AC000D48F3 /* GTHRepositoryInfo_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

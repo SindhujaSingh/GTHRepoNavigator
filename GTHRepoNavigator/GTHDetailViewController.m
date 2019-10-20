@@ -155,12 +155,12 @@
     
     GTHIssuesInfo *info = self.issues[indexPath.row];
     NSArray *labels = [NSArray arrayWithArray:info.labels];
-    UIImage *statusImage;
+    UIImage *statusImage = [[UIImage imageNamed:@"circleState"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     if([[info issueState] isEqualToString:@"open"]) {
-        statusImage = [[UIImage imageNamed:@"starFilled"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        cell.issueStateImageView.tintColor = [UIColor greenColor];
     } else {
-        statusImage = [[UIImage imageNamed:@"starHollow"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        cell.issueStateImageView.tintColor = [UIColor redColor];
     }
     
     //Setting values for table cell from IssueInfoInfo object.
@@ -175,6 +175,7 @@
             button.userInteractionEnabled = false;
             button.layer.cornerRadius = 10;
             button.clipsToBounds = true;
+            button.titleLabel.tintColor = [UIColor blackColor];
             [button setTitle:[label valueForKey:@"name"] forState:UIControlStateNormal];
             [button setBackgroundColor:[self colorWithHexString:[label valueForKey:@"color"]]];
             [cell.labelStack addArrangedSubview:button];

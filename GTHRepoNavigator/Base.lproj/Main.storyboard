@@ -218,9 +218,8 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Zbh-P4-5xE">
                                                             <rect key="frame" x="15" y="11" width="345" height="357"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RepoName" translatesAutoresizingMaskIntoConstraints="NO" id="HK1-oi-uYv" userLabel="IssueStatus">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circleSolid" translatesAutoresizingMaskIntoConstraints="NO" id="HK1-oi-uYv" userLabel="IssueStatus">
                                                                     <rect key="frame" x="0.0" y="0.0" width="19" height="19"/>
-                                                                    <color key="tintColor" red="0.0068322716349999996" green="1" blue="0.05053903253" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="19" id="2Kd-jj-H6E"/>
                                                                         <constraint firstAttribute="width" constant="19" id="hiy-ZY-lHz"/>
@@ -306,8 +305,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="RepoName" width="50" height="50"/>
         <image name="circle" width="24" height="24"/>
+        <image name="circleSolid" width="16" height="16"/>
         <image name="repository" width="50" height="50"/>
         <image name="starFilled" width="50" height="50"/>
     </resources>
