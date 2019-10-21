@@ -57,8 +57,8 @@
     //Creating NSURL object to send HTTP request to get all repository for given org.
     //NSURL *URL = [NSURL URLWithString:@"https://api.github.com/orgs/intuit/repos"];
     NSURL *URL = url;
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:0.0];
-    //NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    //NSURLRequest *request = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:0.0];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     NSURLSession *session = [NSURLSession sharedSession];
     
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
@@ -104,12 +104,12 @@
                                                   NSArray *linkComponents = [linkInfo componentsSeparatedByString:@";"];
                                                   if ([linkComponents[1] isEqualToString:@" rel=\"next\""]) {
                                                       NSString *linkURLString = [[linkComponents[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-#if ENABLE_LIMIT_OVERRIDE
-                                                      NSString *linkURLWithClientIDAndSecretParams = [NSString stringWithFormat:@"%@&%@", linkURLString, CLIENT_ID_AND_SECRET_PARAM];
-                                                      NSURL *linkURL = [NSURL URLWithString:linkURLWithClientIDAndSecretParams];
-#else
+//#if ENABLE_LIMIT_OVERRIDE
+//                                                      NSString *linkURLWithClientIDAndSecretParams = [NSString stringWithFormat:@"%@&%@", linkURLString, CLIENT_ID_AND_SECRET_PARAM];
+//                                                      NSURL *linkURL = [NSURL URLWithString:linkURLWithClientIDAndSecretParams];
+//#else
                                                        NSURL *linkURL = [NSURL URLWithString:linkURLString];
-#endif
+
                                                       NSLog(@"%@", linkURL);
                                                       if (linkURL != nil) {
                                                           [self fetchReposForURL:linkURL];

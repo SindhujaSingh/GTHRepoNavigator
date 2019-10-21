@@ -73,8 +73,8 @@
 
 - (void) fetchIssuesWithURL:(NSURL *)url {
     // TODO: - May be call this from a separate framework.
-   // NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0.0];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+   // NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0.0];
     NSURLSession *session = [NSURLSession sharedSession];
     
     self.title = @"Loading…";
@@ -128,8 +128,12 @@
                                               if ([linkComponents[1] isEqualToString:@" rel=\"next\""]) {
                                                   NSString *linkURLString = [[linkComponents[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
                                                   
-                                                  NSString *linkURLWithClientIDAndSecretParams = [NSString stringWithFormat:@"%@&%@", linkURLString, CLIENT_ID_AND_SECRET_PARAM];
-                                                  NSURL *linkURL = [NSURL URLWithString:linkURLWithClientIDAndSecretParams];
+//#if ENABLE_LIMIT_OVERRIDE
+//                                                  NSString *linkURLWithClientIDAndSecretParams = [NSString stringWithFormat:@"%@&%@", linkURLString, CLIENT_ID_AND_SECRET_PARAM];
+//                                                  NSURL *linkURL = [NSURL URLWithString:linkURLWithClientIDAndSecretParams];
+//#else
+                                                  NSURL *linkURL = [NSURL URLWithString:linkURLString];
+//#endif
                                                   NSLog(@"%@", linkURL);
                                                   if (linkURL != nil) {
                                                       [self fetchIssuesWithURL:linkURL];
