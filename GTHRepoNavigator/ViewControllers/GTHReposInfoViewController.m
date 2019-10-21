@@ -6,6 +6,7 @@
 //  Copyright © 2019 SindhujaSingh. All rights reserved.
 //
 
+#import "GTHAppDelegate.h"
 #import "GTHReposInfoViewController.h"
 #import "GTHRepoIssuesViewController.h"
 #import "GTHRepositoryInfoCell.h"
@@ -31,57 +32,15 @@
     
     // Show loading… as activity
     self.title = @"Loading…";
-    //Creating NSURL object to send HTTP request to get all repository for given org.
-    NSURL *URL = [NSURL URLWithString:@"https://api.github.com/orgs/intuit/repos"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:0.0];
-    NSURLSession *session = [NSURLSession sharedSession];
-    
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
-                                            completionHandler:
-                                  ^(NSData *data, NSURLResponse *response, NSError *error) {
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          // Setting title after getting response data.
-                                          self.title = @"Intuit";
-                                          
-                                          NSLog(@"Status code: %ld", [(NSHTTPURLResponse *)response statusCode]);
-                                       // Check for error message..
-                                      if (error != nil || [(NSHTTPURLResponse *)response statusCode] != 200) {
-                                          NSLog(@"Error: %@",error);
-                                          
-                                          UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error while fetching repositories.." message:error.description preferredStyle:UIAlertControllerStyleAlert];
-                                          
-                                          UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                              return;
-                                          }];
-                                          [alert addAction:ok];
-                                          //Adding Alert View controller after getting error.
-                                          [self presentViewController:alert animated:true completion:^{
-                                              return;
-                                          }];
-                                        } else {
-                                          // ...
-                                          //Repository array initialization..
-                                          self.repos = [[NSMutableArray alloc] init];
-                                          
-                                          //Json parsing using NSJSONSerialization to convert in to fondation objects.
-                                          NSArray *arrayOfRepos = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                                          for (NSDictionary *repo in arrayOfRepos) {
-                                              
-                                              //Creating RepositoryInfo model from dictionary object of a repository.
-                                              GTHRepositoryInfo *repoInfo = [GTHRepositoryInfo creatFromDictionary:repo];
-                                              
-                                              //Adding RepositoryInfo object to array of repositories.
-                                              [self.repos addObject:repoInfo];
-                                          }
-                                          NSLog(@"%@", self.repos);
-                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                              //Reloading data in table view after fecthing all the repository info.
-                                              [self.tableView reloadData];
-                                         });
-                                      }
-                                          });
-                                  }];
-    [task resume];
+    //Repository array initialization..
+    self.repos = [[NSMutableArray alloc] init];
+
+#if ENABLE_LIMIT_OVERRIDE
+    NSString *urlString = [NSString stringWithFormat:@"https://api.github.com/orgs/intuit/repos?%@", CLIENT_ID_AND_SECRET_PARAM];
+#else
+    NSString *urlString = [NSString stringWithFormat:@"https://api.github.com/orgs/intuit/repos"];
+#endif
+    [self fetchReposForURL:[NSURL URLWithString:urlString]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,6 +51,85 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)fetchReposForURL:(NSURL *)url {
+    //Creating NSURL object to send HTTP request to get all repository for given org.
+    //NSURL *URL = [NSURL URLWithString:@"https://api.github.com/orgs/intuit/repos"];
+    NSURL *URL = url;
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:0.0];
+    //NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                            completionHandler:
+                                  ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          // Setting title after getting response data.
+                                          self.title = @"Intuit";
+                                          
+                                          NSLog(@"Status code: %ld", [(NSHTTPURLResponse *)response statusCode]);
+                                          // Check for error message..
+                                          if (error != nil || [(NSHTTPURLResponse *)response statusCode] != 200) {
+                                              NSLog(@"Error: %@",error);
+                                              
+                                              UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error while fetching repositories.." message:error.description preferredStyle:UIAlertControllerStyleAlert];
+                                              
+                                              UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                  return;
+                                              }];
+                                              [alert addAction:ok];
+                                              //Adding Alert View controller after getting error.
+                                              [self presentViewController:alert animated:true completion:^{
+                                                  return;
+                                              }];
+                                          } else {
+                                              // ...
+                                              
+                                              //Json parsing using NSJSONSerialization to convert in to fondation objects.
+                                              NSArray *arrayOfRepos = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                                              for (NSDictionary *repo in arrayOfRepos) {
+                                                  
+                                                  //Creating RepositoryInfo model from dictionary object of a repository.
+                                                  GTHRepositoryInfo *repoInfo = [GTHRepositoryInfo creatFromDictionary:repo];
+                                                  
+                                                  //Adding RepositoryInfo object to array of repositories.
+                                                  [self.repos addObject:repoInfo];
+                                              }
+                                              
+                                              // Check if there was any LINK header set for next set of results.
+                                              NSArray *links = [[[(NSHTTPURLResponse *)response allHeaderFields] valueForKey:@"LINK"] componentsSeparatedByString:@","];
+                                              
+                                              for (NSString *linkInfo in links) {
+                                                  NSArray *linkComponents = [linkInfo componentsSeparatedByString:@";"];
+                                                  if ([linkComponents[1] isEqualToString:@" rel=\"next\""]) {
+                                                      NSString *linkURLString = [[linkComponents[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+#if ENABLE_LIMIT_OVERRIDE
+                                                      NSString *linkURLWithClientIDAndSecretParams = [NSString stringWithFormat:@"%@&%@", linkURLString, CLIENT_ID_AND_SECRET_PARAM];
+                                                      NSURL *linkURL = [NSURL URLWithString:linkURLWithClientIDAndSecretParams];
+#else
+                                                       NSURL *linkURL = [NSURL URLWithString:linkURLString];
+#endif
+                                                      NSLog(@"%@", linkURL);
+                                                      if (linkURL != nil) {
+                                                          [self fetchReposForURL:linkURL];
+                                                      } else {
+                                                          NSLog(@"Invalid URL: %@", linkURLString);
+                                                      }
+                                                  }
+                                              }
+                                              
+                                              NSLog(@"%@, count: %lu", self.repos, self.repos.count);
+                                              
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  //Reloading data in table view after fetching all the repository info.
+                                                  [self.tableView reloadData];
+                                              });
+                                          }
+                                      });
+                                  }];
+    [task resume];
+
 }
 
 #pragma mark - Segues

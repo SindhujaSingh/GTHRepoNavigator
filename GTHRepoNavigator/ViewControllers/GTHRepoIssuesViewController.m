@@ -6,6 +6,7 @@
 //  Copyright © 2019 SindhujaSingh. All rights reserved.
 //
 
+#import "GTHAppDelegate.h"
 #import "GTHRepoIssuesViewController.h"
 #import "GTHIssueCell.h"
 #import "GTHIssuesInfo.h"
@@ -16,7 +17,6 @@
 @property (strong, nonatomic) NSMutableArray *closedIssues;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
-@property (strong, nonatomic) NSArray *issues;
 
 // Action called when segmented control switch selection changes.
 - (IBAction)switchIssues:(UISegmentedControl *)sender;
@@ -29,9 +29,20 @@
     // Update the user interface for the detail item.
     
     //TODO: - This need to go somewhere else.
+    
+    //Arrays initialization..
+    self.openIssues = [[NSMutableArray alloc] init];
+    self.closedIssues = [[NSMutableArray alloc] init];
+    
     //Creating NSURL object to send HTTP request to get all the issues for selected repository.
+#if ENABLE_LIMIT_OVERRIDE
+    NSString *url = [NSString stringWithFormat:@"https://api.github.com/repos/%@/issues?state=all&%@",self.repoInfo.name, CLIENT_ID_AND_SECRET_PARAM];
+#else
     NSString *url = [NSString stringWithFormat:@"https://api.github.com/repos/%@/issues?state=all",self.repoInfo.name];
+#endif
+    
     NSURL *URL = [NSURL URLWithString:url];
+    
     [self fetchIssuesWithURL:URL];
 }
 
@@ -62,8 +73,8 @@
 
 - (void) fetchIssuesWithURL:(NSURL *)url {
     // TODO: - May be call this from a separate framework.
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    //NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:2.0];
+   // NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:0.0];
     NSURLSession *session = [NSURLSession sharedSession];
     
     self.title = @"Loading…";
@@ -90,10 +101,6 @@
                                           
                                       } else {
                                           // ...
-                                          //Arrays initialization..
-                                          self.openIssues = [[NSMutableArray alloc] init];
-                                          self.closedIssues = [[NSMutableArray alloc] init];
-                                          
                                           //Json parsing using NSJSONSerialization to convert in to fondation objects.
                                           NSArray *issues = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                                           
@@ -112,8 +119,28 @@
                                                   [self.closedIssues addObject:issueInfo];
                                               }
                                           }
-                                          //NSLog(@"%@", self.openIssues);
-                                          //NSLog(@"%@", self.closedIssues);
+                                          
+                                          // Check if there was any LINK header set for next set of results.
+                                          NSArray *links = [[[(NSHTTPURLResponse *)response allHeaderFields] valueForKey:@"LINK"] componentsSeparatedByString:@","];
+                                          
+                                          for (NSString *linkInfo in links) {
+                                              NSArray *linkComponents = [linkInfo componentsSeparatedByString:@";"];
+                                              if ([linkComponents[1] isEqualToString:@" rel=\"next\""]) {
+                                                  NSString *linkURLString = [[linkComponents[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+                                                  
+                                                  NSString *linkURLWithClientIDAndSecretParams = [NSString stringWithFormat:@"%@&%@", linkURLString, CLIENT_ID_AND_SECRET_PARAM];
+                                                  NSURL *linkURL = [NSURL URLWithString:linkURLWithClientIDAndSecretParams];
+                                                  NSLog(@"%@", linkURL);
+                                                  if (linkURL != nil) {
+                                                      [self fetchIssuesWithURL:linkURL];
+                                                  } else {
+                                                      NSLog(@"Invalid URL: %@", linkURLString);
+                                                  }
+                                              }
+                                          }
+                                          
+                                          NSLog(@"%@, count: %lu", self.openIssues, self.openIssues.count);
+                                          NSLog(@"%@, count: %lu", self.closedIssues, self.closedIssues.count);
                                           
                                           dispatch_async(dispatch_get_main_queue(), ^{
                                               [self.tableView reloadData];
@@ -126,7 +153,9 @@
 
 
 - (IBAction)switchIssues:(UISegmentedControl *)sender {
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 
@@ -146,14 +175,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GTHIssueCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    NSArray *issues;
     
     if (self.segmentedControl.selectedSegmentIndex == 0) {
-        self.issues = self.openIssues;
+        issues = self.openIssues;
     } else {
-        self.issues = self.closedIssues;
+        issues = self.closedIssues;
     }
     
-    GTHIssuesInfo *info = self.issues[indexPath.row];
+    GTHIssuesInfo *info = issues[indexPath.row];
     NSArray *labels = [NSArray arrayWithArray:info.labels];
     UIImage *statusImage = [[UIImage imageNamed:@"circleState"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
